@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<p id="demo"></p>
+<script>
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            myFunction(this);
+        }
+    };
+    xhttp.open("GET", "books.xml", true);
+    xhttp.send();
+    function myFunction(xml) {
+        var xmlDoc, x, y, txt;
+        xmlDoc = xml.responseXML;
+        // tao nut book moi
+        x = xmlDoc.createElement("book");
+        // tao nut title
+        y = xmlDoc.createElement("title");
+        y.textContent = "Lap trinh Web";
+        x.appendChild(y);
+        // tao nut price
+        y = xmlDoc.createElement("price");
+        y.textContent = "100";
+        x.appendChild(y);
+        // them book moi vao books
+        xmlDoc.documentElement.appendChild(x);
+        // hien thi cac nut
+        var ds = xmlDoc.getElementsByTagName("book");
+        txt = "Số sách sau khi thêm: " + ds.length + "<br>";
+        for (var i = 0; i < ds.length; i++) {
+            txt += ds[i].getElementsByTagName("title")[0].textContent + "<br>";
+        }
+        document.getElementById("demo").innerHTML = txt;
+    }
+</script>
+
+</body>
+</html>
